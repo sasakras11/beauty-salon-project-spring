@@ -1,11 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
 <head>
+
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
 </head>
 <body>
-choose salon page
+<a href="?lang=en" th:text="#{label.en}">English</a>|<a href="?lang=ua" th:text="#{label.ua}"></a>
 
+<table style="width:100%">
+<th:block th:each="salon : ${salons}">
+
+    <tr>
+
+        <th>
+            <form id="login-form" class="form" th:action="@{/salons}" method="post">
+                <a th:text="${salon.address}" th:href="@{/chooseSalon(salonId=${salon.id})}">delete</a>
+            </form>
+        </th>
+    </tr>
+</th:block>
+</table>
 </body>
 </html>

@@ -1,7 +1,7 @@
 package com.salon.controller;
 
 import com.salon.entity.User;
-import com.salon.service.PasswordEncoder;
+import com.salon.service.SalonService;
 import com.salon.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +17,7 @@ public class LoginController {
 
   private final UserService userService;
   private final UserBean userBean;
+  private final SalonService salonService;
 
   @GetMapping(value = {"/"})
   public ModelAndView getLoginPage() {
@@ -34,6 +35,7 @@ public class LoginController {
     ModelAndView modelAndView = new ModelAndView();
     User user = userService.login(username, password);
     userBean.setUser(user);
+    modelAndView.addObject("salons", salonService.findAll());
 
     modelAndView.setViewName("salons");
 
@@ -56,6 +58,8 @@ public class LoginController {
     ModelAndView modelAndView = new ModelAndView();
     User user = userService.register(username, password);
     userBean.setUser(user);
+    modelAndView.addObject("salons", salonService.findAll());
+
 
     modelAndView.setViewName("salons");
 
