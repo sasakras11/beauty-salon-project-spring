@@ -1,0 +1,194 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<body>
+<a href="?lang=en" th:text="#{label.en}">English</a>|<a href="?lang=ua" th:text="#{label.ua}"></a>
+
+
+<div id="datepicker"></div>
+
+<table style="width:20%">
+    <tr>
+        <th>time</th>
+        <th>client name</th>
+        <th>reserve</th>
+
+    </tr>
+    <tr>
+        <td id="9">9 - 10</td>
+        <td id="username9">
+        </td>
+        <td>
+            <a id="reserve9" href="/reserve?hour=9">free</a>
+        </td>
+    </tr>
+    <tr>
+        <td id="10">10 - 11</td>
+        <td id="username10">
+        </td>
+        <td>
+            <a id="reserve10" href="/reserve?hour=10">free</a>
+        </td>
+
+    </tr>
+    <tr>
+        <td id="11">11 - 12</td>
+        <td id="username11">
+        </td>
+        <td>
+            <a id="reserve11" href="/reserve?hour=11">free</a>
+        </td>
+
+    </tr>
+    <tr>
+        <td id="12">12 - 13</td>
+        <td id="username12">
+        </td>
+        <td>
+            <a id="reserve12" href="/reserve?hour=12">free</a>
+        </td>
+
+    </tr>
+    <tr>
+        <td id="13">13- 14</td>
+        <td id="username13">
+        </td>
+        <td>
+            <a id="reserve13" href="/reserve?hour=13">free</a>
+        </td>
+
+    </tr>
+    <tr>
+        <td id="14">14 - 15</td>
+        <td id="username14">
+        </td>
+        <td>
+            <a id="reserve14" href="/reserve?hour=14">free</a>
+        </td>
+
+    </tr>
+    <tr>
+        <td id="15">15 - 16</td>
+        <td id="username15">
+        </td>
+        <td>
+            <a id="reserve15" href="/reserve?hour=15">free</a>
+        </td>
+
+    </tr>
+    <tr>
+        <td id="16">16 - 17</td>
+        <td id="username16">
+        </td>
+        <td>
+            <a id="reserve16" href="/reserve?hour=16">free</a>
+        </td>
+
+    </tr>
+    <tr>
+        <td id="17">17 - 18</td>
+        <td id="username17">
+        </td>
+        <td>
+            <a id="reserve17" href="/reserve?hour=17">free</a>
+        </td>
+
+    </tr>
+    <tr>
+        <td id="18">18 - 19</td>
+        <td id="username18">
+        </td>
+        <td>
+            <a id="reserve18" href="/reserve?hour=18">free</a>
+        </td>
+
+    </tr>
+</table>
+<script>
+
+
+    var reservations;
+    var date;
+    var hour;
+
+    $(window).on('load', function () {
+        $.get("http://localhost:8080/reservations", function (data) {
+            reservations = data;
+        });
+    });
+
+
+    $(function () {
+        $("#datepicker").datepicker({
+            dateFormat: "yy-mm-dd",
+            onSelect: function () {
+                var selected = $(this).val();
+                date = selected;
+
+                let i = 9;
+                while (i < 19) {
+                    document.getElementById(i.toLocaleString()).style.color = "black";
+                    document.getElementById('username' + i.toLocaleString()).textContent = "";
+                    document.getElementById('reserve' + i.toLocaleString()).style.visibility = "visible";
+                    document.getElementById('reserve' + i.toLocaleString()).setAttribute("href","/reserve?hour="+i+"&date="+date.toString());
+
+
+
+                    i++;
+                }
+
+
+                $.each(reservations, function (index, jsonObject) {
+
+                    var username = "free";
+                    $.each(jsonObject, function (a, b) {
+                        if (a == "client") {
+                            $.each(b, function (h, g) {
+                                if (h == "username") {
+                                    username = g;
+                                }
+                            });
+                        }
+
+                    });
+                    var reservationDate = jsonObject.start.substring(0, jsonObject.start.lastIndexOf("T"));
+                    if (reservationDate === selected) {
+                        var time = jsonObject.start.split(':')[0].split('T')[1];
+                        document.getElementById(time.toLocaleString()).style.color = "red";
+                        document.getElementById('username' + time.toLocaleString()).textContent = username;
+                        document.getElementById('reserve' + time.toLocaleString()).style.visibility = "hidden";
+
+
+                        if (jsonObject.duration > 1) {
+                            document.getElementById((time+1).toLocaleString()).style.color = "red";
+                            document.getElementById('username' + (time+1).toLocaleString()).textContent = username;
+                            document.getElementById('reserve' + (time+1).toLocaleString()).style.visibility = "hidden";
+
+
+                        }
+                    }
+
+
+                });
+
+
+            }
+        });
+    });
+</script>
+
+
+</body>
+</html>

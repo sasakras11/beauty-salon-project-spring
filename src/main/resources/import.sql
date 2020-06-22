@@ -16,6 +16,9 @@ insert into procedures(name, description, duration_hours) values( 'hand massage'
 insert into procedures(name, description, duration_hours) values( 'back massage','alallaalalal',1);
 insert into procedures(name, description, duration_hours) values( 'face massage','alallaalalal',1);
 insert into procedures(name, description, duration_hours) values( 'full massage','alallaalalal',2);
+insert into procedures(name, description, duration_hours) values( 'color pils','alallaalalal',2);
+insert into procedures(name, description, duration_hours) values( 'change hair color','alallaalalal',1);
+
 
 insert into reservations(start_hour,end_hour,procedure_procedure_id,beauty_master_user_id,client_user_id) values('2020-5-18 15:00:00','2020-5-18 16:00:00',1,3,2);
 insert into reservations(start_hour,end_hour,procedure_procedure_id,beauty_master_user_id,client_user_id) values('2020-5-18 14:00:00','2020-5-18 15:00:00',2,3,2);

@@ -15,13 +15,9 @@
 
 <table style="width:100%">
 <th:block th:each="salon : ${salons}">
-
     <tr>
-
         <th>
-            <form id="login-form" class="form" th:action="@{/salons}" method="post">
-                <a th:text="${salon.address}" th:href="@{/chooseSalon(salonId=${salon.id})}">delete</a>
-            </form>
+                <a  th:text="${salon.address}" th:href="@{/chooseSalon(salonId=${salon.id})}">delete</a>
         </th>
     </tr>
 </th:block>

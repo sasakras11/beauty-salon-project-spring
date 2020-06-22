@@ -3,8 +3,10 @@ package com.salon.service.impl;
 import com.salon.entity.Role;
 import com.salon.entity.User;
 import com.salon.exception.LoginCredentialsException;
+import com.salon.exception.NotValidParameterException;
 import com.salon.exception.UserIsRegisteredException;
 import com.salon.repository.UserRepository;
+import com.salon.service.DataParser;
 import com.salon.service.PasswordEncoder;
 import com.salon.service.UserService;
 import com.salon.service.Validator;
@@ -12,6 +14,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -22,6 +26,7 @@ public class UserServiceImpl implements UserService {
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
   private final Validator validator;
+  private final DataParser dataParser;
 
   @Override
   public User register(String username, String password) {
@@ -69,5 +74,16 @@ public class UserServiceImpl implements UserService {
   @Override
   public void save(User user) {
     userRepository.save(user);
+  }
+
+  @Override
+  public List<User> findAllMastersBySalonId(String salonId) {
+    return dataParser
+        .parseInt(salonId)
+        .map(userRepository::findAllMastersBySalonId)
+        .orElseThrow(
+            () ->
+                new NotValidParameterException(
+                    String.format("request param salonId - [%s] is noy valid", salonId)));
   }
 }

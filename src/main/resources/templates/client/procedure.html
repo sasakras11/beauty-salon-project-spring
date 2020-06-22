@@ -1,0 +1,35 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+<a href="?lang=en" th:text="#{label.en}">English</a>|<a href="?lang=ua" th:text="#{label.ua}"></a>
+
+<table style="width:100%">
+    <th:block th:each="procedure : ${procedures}">
+
+        <tr>
+
+            <th>
+                <form th:action="@{/chooseProcedure(procedureId=${procedure.id})}">
+                    <button type="submit" th:text="${procedure.name}">...</button>
+                </form>
+            </th>
+        </tr>
+    </th:block>
+    <form action="/page">
+        <input type="text" id="page">
+        <input type="submit" th:text="find page">
+    </form>
+
+</table>
+</body>
+</html>

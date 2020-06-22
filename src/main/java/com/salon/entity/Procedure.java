@@ -4,7 +4,7 @@ import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
+import java.io.Serializable;
 
 @Data
 @Builder
@@ -13,7 +13,7 @@ import javax.validation.constraints.NotEmpty;
 @EqualsAndHashCode
 @Entity
 @Table(name = "procedures")
-public class Procedure {
+public class Procedure implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

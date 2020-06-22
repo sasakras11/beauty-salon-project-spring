@@ -3,6 +3,7 @@ package com.salon.entity;
 import java.util.Date;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 @Data
@@ -28,8 +29,11 @@ public class Reservation {
   @OneToOne private Procedure procedure;
 
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
   private User beautyMaster;
 
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
   private User client;
 }

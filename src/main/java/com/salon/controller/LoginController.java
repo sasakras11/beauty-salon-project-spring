@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class LoginController {
 
   private final UserService userService;
-  private final UserBean userBean;
+  private final SessionBean sessionBean;
   private final SalonService salonService;
 
   @GetMapping(value = {"/"})
@@ -34,7 +34,7 @@ public class LoginController {
 
     ModelAndView modelAndView = new ModelAndView();
     User user = userService.login(username, password);
-    userBean.setUser(user);
+    sessionBean.setUser(user);
     modelAndView.addObject("salons", salonService.findAll());
 
     modelAndView.setViewName("salons");
@@ -57,7 +57,7 @@ public class LoginController {
 
     ModelAndView modelAndView = new ModelAndView();
     User user = userService.register(username, password);
-    userBean.setUser(user);
+    sessionBean.setUser(user);
     modelAndView.addObject("salons", salonService.findAll());
 
 

@@ -2,6 +2,7 @@ package com.salon.service;
 
 import com.salon.entity.User;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
@@ -10,5 +11,9 @@ public interface UserService {
 
   User login(String username, String password);
 
-  public void save(User user);
+   void save(User user);
+
+   List<User> findAllMastersBySalonId(String salonId);
+
+
 }

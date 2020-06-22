@@ -1,0 +1,28 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+<a href="?lang=en" th:text="#{label.en}">English</a>|<a href="?lang=ua" th:text="#{label.ua}"></a>
+
+<table style="width:100%">
+    <th:block th:each="master : ${masters}">
+
+        <tr>
+
+            <th>
+                    <a th:text="${master.username}" th:href="@{/chooseMaster(masterId=${master.id})}">delete</a>
+            </th>
+        </tr>
+    </th:block>
+</table>
+</body>
+</html>
